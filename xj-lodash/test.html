@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="container"></div>
+</body>
+<script src="xj-lodash.js"></script>
+<script>
+  //now 你可以使用全局变量 _ 使用lodash里面的函数。
+  var count = 1;
+  var container = document.getElementById('container');
+
+  function getUserAction() {
+      container.innerHTML = count++;
+      console.log(this)
+  };
+  function aclick() {
+    console.log(this)
+  }
+
+
+  //为什么直接接函数和一个异步函数效果不一样呢？
+  container.onmousemove =  _.debounce(getUserAction,1000)
+  //container.onmousemove =  _.throttle2(getUserAction,1000)
+  //container.onclick = _.debounce(aclick)
+  //container.addEventListener('click', aclick)
+</script>
+<style>
+  #container{
+      width: 100%; height: 200px; line-height: 200px; text-align: center; color: #fff; background-color: #444; font-size: 30px;
+  }
+</style>
+</html>
