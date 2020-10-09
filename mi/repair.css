@@ -1,0 +1,121 @@
+.repairwrap{
+  width:100%;
+  height:275px;
+  background-color: white;
+  font-size:12px;
+  font-family: Helvetica, sans-serif, Arial;
+}
+.repair{
+  width:1230px;
+  height:275px;
+  margin:0 auto;
+  /* background-color: yellow; */
+}
+.repairup{
+  height:80px;
+  width:1230px;
+  border-bottom:1px solid #E0E0E0;
+}
+.serve{
+  height:80px;
+  text-align:center;
+  float:left;
+  /* background-color: coral; */
+  width:246px;
+  transition:0.4s;
+  cursor:pointer;
+}
+.serve span{
+  font-size:16px;
+  border-left:1px solid #E0E0E0;
+  display:inline-block;
+  width:246px;
+  margin:32px 0;
+}
+.repairup .serve:first-child span{
+  border-left:none;
+}
+.repairdown{
+  width:1230px;
+  height:194px;
+}
+.service{
+  width:250px;
+  height:194px;
+  float:right;
+  /* background-color: blue; */
+}
+.phonenum{
+  width:250px;
+  height:110px;
+  /* background-color: red; */
+  margin-top:42px;
+  box-sizing:border-box;
+  border-left:1px solid #E0E0E0;
+  text-align:center;
+}
+.num1{
+  display:block;
+  color:#FF6700;
+  font-size:22px;
+}
+.num2{
+  display:inline-block;
+  color:#B37A94;
+  width:134px;
+  margin-top:5px;
+  white-space:;
+}
+.num3{
+  display:inline-block;
+  color:#FF6700;
+  width:120px;
+  height:30px;
+  box-sizing: border-box;
+  border:1px solid #FF6700;
+  line-height:30px;
+  margin-top:15px;
+  transition:0.5s;
+  cursor:pointer;
+}
+.num3:hover{
+  background-color: #FF6700;
+  color:white;
+  transition:0.5s;
+}
+.helpzone{
+  width:980px;
+  height:194px;
+  /* background-color: green; */
+}
+.helpbar{
+  float:left;
+  height:194px;
+  width:90px;
+  margin-left:70px;
+  /* background-color: yellow; */
+}
+.helpbar:first-child{
+  margin-left:0px;
+}
+.helpup{
+  font-size:14px;
+  padding:35px 0 10px 0;
+}
+.helpdown span{
+  font-size:12px;
+  font-family: Helvetica, sans-serif, Arial;
+  display:block;
+  color:#757575;
+  margin-top:13px;
+}
+.helpdown span:hover{
+  font-size:12px;
+  font-family: Helvetica, sans-serif, Arial;
+  color:#FF6700;
+  cursor:pointer;
+}
+/* * {
+  font-size:12px;
+  font-family: Helvetica, sans-serif, Arial;
+} */

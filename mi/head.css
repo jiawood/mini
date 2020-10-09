@@ -1,0 +1,168 @@
+html{
+  width: 100%;
+}
+body{
+width:100%;
+font-size: 0;
+margin: 0;
+}
+div.site-topbar{
+height:40px;
+width:100%;
+background-color: rgb(51,51,51);
+}
+
+a{
+  text-decoration: none;
+  cursor: pointers;
+}
+.top-content{
+width:1226px;
+margin:auto;
+position:relative;
+vertical-align: middle;
+}
+
+/*头部元素全部用a标签，这些标签的样式*/
+.site-topbar-left > a{
+  xvertical-align: middle;
+  height:40px;
+  display: inline-block;
+  padding-top:12px;
+  text-decoration: none;
+  box-sizing:border-box;
+  font-size: 12px;
+  color:rgb(176,176,176);
+  margin-right:16px;
+  position: relative;
+  display: inline-block;
+}
+
+/*hover的时候颜色会变化*/
+.site-topbar-left > a:hover{
+  color:rgb(255,255,255);
+}
+/*下载app下面的图片*/
+.site-topbar-left a.site-topbar-app div > img{
+
+width:85px;
+height:85px;
+position: absolute;
+top:20px;
+left:20px;
+
+}
+
+
+.site-topbar-left a.site-topbar-app div > span{
+position: absolute;
+word-wrap: nowrap;
+left:20px;
+right:auto;
+top:120px;
+color:rgb(51,51,51);
+font-size:14px;
+z-index: 1000;
+}
+
+.site-topbar-left a.site-topbar-app div{
+width: 125px;
+xheight:150px;
+height: 0;
+background-color: #fff;
+position: absolute;
+box-shadow:0 0  1px rgb(120,120,120);
+top:40px;
+left:-40px;
+xdisplay: none;
+z-index: 1000;
+transition: .4s;
+overflow: hidden;
+}
+.site-topbar-left a.site-topbar-app:hover div {
+xdisplay: block;
+height: 150px;
+}
+
+
+/*用伪元素实现三角形*/
+.site-topbar-left a.site-topbar-app:hover::after{
+  content:"";
+  border:20px solid white;
+  border-color:transparent transparent white transparent;
+  position: absolute;
+  left:0px;
+}
+
+/*后三个元素要向后移*/
+.site-topbar-left > a:nth-last-child(3){
+ margin-left:230px;
+}
+
+.shopping{
+  position: absolute;
+  background-color: rgb(66,66,66);
+  height:40px;
+  width:120px;
+  right:0;
+  top:0;
+  vertical-align: middle;
+  color:rgb(176,176,176);
+  display: inline-block;
+
+}
+/*实现购物车*/
+.shopping i{
+  top:12px;
+  position: absolute;
+  width:300px;
+  height:18px;
+  left:16px;
+}
+
+a.shopping:hover div.shopping-content{
+  height: 100px;
+}
+a.shopping span.data-nums{
+  xwidth:23px;
+  height:18px;
+  font-size: 12px;
+  position: absolute;
+  top:12px;
+  left:35px;
+}
+div.shopping-content {
+height:0px;
+width:315px;
+background-color: white;
+position: absolute;
+left:-195px;
+top:40px;
+box-shadow: 0 0 2px rgb(51,51,51);
+transition:  .4s;
+z-index: 1000;
+padding: 0;
+vertical-align: middle;
+overflow: hidden;
+margin: 0;
+text-align: center;
+
+}
+
+span.data-message{
+line-height: 90px;
+width: 316px;
+  font-size: 12px;
+  color:black;
+
+}
+.shopping:hover{
+  background-color: rgb(255,255,255);
+}
+.shopping:hover i{
+  color:rgb(255,103,0);
+}
+.shopping:hover span.data-nums{
+  color:rgb(255,103,0);
+
+}

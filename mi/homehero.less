@@ -1,0 +1,217 @@
+
+
+// 实现轮播图
+.slider{
+  margin:0;
+  padding:0;
+  margin-top:10px;
+  height:460px;
+  width: 1226px;
+  position: relative;
+  input{
+    display: none;
+  }
+  input[id='i1']:checked ~ .item  label[for="i1"],
+  input[id='i2']:checked ~ .item  label[for="i2"],
+  input[id='i3']:checked ~ .item  label[for="i3"],
+  input[id='i4']:checked ~ .item  label[for="i4"],
+  input[id='i5']:checked ~ .item  label[for="i5"]{
+    background-color: rgb(250,250,250);
+  }
+  img{
+    height:460px;
+    width: 1226px;
+    position: absolute;
+    left:0;
+    top:0;
+    opacity: 0;
+    transition:.4s;
+  }
+}
+
+.container{
+  margin:auto;
+  padding:0;
+  margin-top:10px;
+  height:460px;
+  width: 1226px;
+  position: relative;
+}
+.item {
+  height:10px;
+  width:100px;
+  position: absolute;
+  bottom: 25px;
+  right:33px;
+  xbackground-color:red;
+  a{
+
+    cursor: pointer;
+    &:hover label{
+      background-color:rgb(250,250,250);
+    }
+  }
+  label{
+  height:5px;
+  width:5px;
+  border-radius: 10px;
+  margin-left:12px ;
+  background-color:rgb(51,51,51);
+  xbackground-origin: border-box;
+  display: block;
+  float: left;
+  box-shadow: 0 0 0px 2px rgb(132,132,132);
+  }
+}
+.arrow-L label{
+  height:70px;
+  width:42px;
+  position: absolute;
+  top: 195px;
+  left:230px;
+  background:url(img/icon-slides.png) repeat 67% 0;
+  display:none;
+  &:hover{
+    background-position: 0 0;
+  }
+}
+.arrow-R label{
+  height:70px;
+  width:42px;
+  position: absolute;
+  top: 195px;
+  right:0px;
+  background:url(img/icon-slides.png) repeat 100% 0;
+  display: none;
+  &:hover{
+    background-position: 33% 0;
+  }
+}
+
+input:checked + img{
+  opacity: 1;
+}
+
+
+input[id="i2"]:checked ~ div.arrow-L label[for="i1"]{
+  display: block;
+}
+input[id="i3"]:checked ~ div.arrow-L label[for="i2"]{
+  display: block;
+}
+input[id="i4"]:checked ~ div.arrow-L label[for="i3"]{
+  display: block;
+}
+input[id="i5"]:checked ~ div.arrow-L label[for="i4"]{
+  display: block;
+}
+input[id="i1"]:checked ~ div.arrow-L label[for="i5"]{
+  display: block;
+}
+
+input[id="i1"]:checked ~ div.arrow-R label[for="i2"]{
+  display: block;
+}
+input[id="i2"]:checked ~ div.arrow-R label[for="i3"]{
+  display: block;
+}
+input[id="i3"]:checked ~ div.arrow-R label[for="i4"]{
+  display: block;
+}
+input[id="i4"]:checked ~ div.arrow-R label[for="i5"]{
+  display: block;
+}
+input[id="i5"]:checked ~ div.arrow-R label[for="i1"]{
+  display: block;
+}
+
+
+
+// home-nav
+.home-nav{
+  width:234px;
+  height:460px;
+  position: absolute;
+  left:0;
+  top:0;
+  padding: 0;
+  margin: 0;
+  background-color: rgb(165,155,155);
+  >ul{
+    padding:20px 0px;
+
+    >li.home-nav-list{
+    width: 234px;
+    height: 42px;
+    overflow: hidden;
+    &:hover{
+      background-color: rgb(255,103,0);
+    }
+    &:hover div{
+        display:block;
+
+    }
+      >a {
+    width:206px;
+    height:42px;
+    font-size: 14px;
+    line-height: 42px;
+    vertical-align: middle;
+    margin-left:10px;
+    box-sizing:border-box;
+    color:rgb(255,255,255);
+        i{
+          float:right;
+          margin-right: 20px;
+        }
+    }
+    >div{
+      position: absolute;
+      left:100%;
+      top:0;
+      width:960px;
+      background-color: #fff;
+      height:460px;
+      display: none;
+      ul{
+        height: 460px;
+        display: flex;
+        flex-flow: column wrap;
+
+        li{
+          list-style-type: none;
+          width: 249px;
+          height: 76px;
+          font-size: 16px;
+          box-sizing: border-box;
+          padding:20px 0 20px 23px;
+          a{
+            display: inline-block;
+            vertical-align: top;
+          width: 249px;
+
+            img{
+            display:inline-block;
+            vertical-align: middle;
+            padding-right: 20px;
+          }
+          span{
+            display:inline-block;
+            vertical-align: middle;
+            color:black;
+            &:hover{
+              color:rgb(255,103,0);
+            }
+          }
+          }
+
+        }
+      }
+    }
+  }
+}
+}
+
+
+
+
