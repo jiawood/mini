@@ -68,14 +68,76 @@
         }
       }
 
-      let c = new PriorityQueue();
+      class PriorityQueue1 {
+        constructor() {
+          this.ary = [];
+        }
+
+        get size() {
+          return this.ary.length;
+        }
+
+        add(num) {
+          this.ary.push(num);
+          let n = this.ary.length - 1;
+
+          this._shiftUp(n)
+          return this;
+        }
+
+        _shiftUp(idx) {
+            if(idx === 0){
+                return 
+            }
+            let parent = Math.floor((idx - 1) / 2)
+            if(this.ary[parent] < this.ary[idx]){
+                this._swap(parent,idx)
+            }
+            this._shiftUp(parent) 
+        }
+
+        _shifDown(idx) {
+            if(idx > Math.floor((this.ary.length - 1) / 2)){
+                return 
+            }
+            let left = idx * 2 + 1 
+            let right = idx * 2 + 2 
+            if(this.ary[left] > this.ary[right] && this.ary[left] > this.ary[idx]){
+                this._swap(left,idx)
+                this._shifDown(left)
+                return 
+            }
+            if(this.ary[left] < this.ary[right] && this.ary[right] > this.ary[idx]){
+                this._swap(right,idx)
+                this._shifDown(right)
+                return 
+            }
+            this._shifDown(2 * idx + 1)
+        }
+
+        _swap(i, j) {
+          const tmp = this.ary[i];
+          this.ary[i] = this.ary[j];
+          this.ary[j] = tmp;
+        }
+
+        peek() {
+          const res = this.ary[0];
+          this.ary[0] = this.ary.pop();
+          this._shifDown(0)
+          return res;
+        }
+      }
+      
+
+      let c = new PriorityQueue1();
       const random = new Array(10).fill(0).map(i => Math.floor(Math.random() * 100))
       for(let i =0; i < 10; i++){
           console.log(c.add(random[i]))
       }
-    //   for(let i =0; i < 100; i++){
-    //       console.log(c.peek())
-    //   }
+      for(let i =0; i < 10; i++){
+          console.log(c.peek())
+      }
     </script>
   </body>
 </html>
