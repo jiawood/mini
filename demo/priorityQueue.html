@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 实现一个最大堆，可以往最大堆里面增加数据，取出最大值
+      class PriorityQueue {
+        constructor() {
+          this.ary = [];
+        }
+
+        get size() {
+          return this.ary.length;
+        }
+
+        add(num) {
+          this.ary.push(num);
+          let n = this.ary.length - 1;
+
+          while (n > 0) {
+            let idx = Math.floor((n - 1) / 2);
+            if (this.ary[idx] < this.ary[n]) {
+              this._swap(idx, n);
+              n = Math.floor((n - 1) / 2);
+            } else {
+              break;
+            }
+          }
+          return this;
+        }
+
+        _swap(i, j) {
+          const tmp = this.ary[i];
+          this.ary[i] = this.ary[j];
+          this.ary[j] = tmp;
+        }
+
+        peek() {
+          const res = this.ary[0];
+          this.ary[0] = this.ary.pop();
+          let idx = 0;
+          while (idx < (this.ary.length - 1) / 2) {
+            const left = this.ary[2 * idx + 1];
+            const right = this.ary[2 * idx + 2];
+            if (left < right) {
+              if (this.ary[idx] < right) {
+                this._swap(idx, 2 * idx + 2);
+                idx = 2 * idx + 2;
+              } else {
+                break;
+              }
+            } else {
+              if (this.ary[idx] < left) {
+                this._swap(idx, 2 * idx + 1);
+                idx = 2 * idx + 1;
+              } else {
+                  break
+                };
+            }
+          }
+
+          return res;
+        }
+      }
+
+      let c = new PriorityQueue();
+      const random = new Array(10).fill(0).map(i => Math.floor(Math.random() * 100))
+      for(let i =0; i < 10; i++){
+          console.log(c.add(random[i]))
+      }
+    //   for(let i =0; i < 100; i++){
+    //       console.log(c.peek())
+    //   }
+    </script>
+  </body>
+</html>
