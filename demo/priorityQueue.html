@@ -69,8 +69,9 @@
       }
 
       class PriorityQueue1 {
-        constructor() {
-          this.ary = [];
+        constructor(initial) {
+          this.ary = initial.slice() || [];
+          this._heapfiy()
         }
 
         get size() {
@@ -85,6 +86,15 @@
           return this;
         }
 
+        _heapfiy(){
+            const last = Math.floor((this.ary.length - 1) / 2 )
+            for(let i = last; i >= 0; i --){
+                this._shifDown(i)
+            }
+            console.log(this.ary)
+            return this.ary 
+        }
+
         _shiftUp(idx) {
             if(idx === 0){
                 return 
@@ -97,22 +107,22 @@
         }
 
         _shifDown(idx) {
-            if(idx > Math.floor((this.ary.length - 1) / 2)){
+            if(idx > Math.floor((this.ary.length) / 2)){
                 return 
             }
             let left = idx * 2 + 1 
             let right = idx * 2 + 2 
-            if(this.ary[left] > this.ary[right] && this.ary[left] > this.ary[idx]){
-                this._swap(left,idx)
-                this._shifDown(left)
-                return 
+            let maxId = idx
+            if(this.ary[left] > this.ary[maxId]){
+                maxId = left 
             }
-            if(this.ary[left] < this.ary[right] && this.ary[right] > this.ary[idx]){
-                this._swap(right,idx)
-                this._shifDown(right)
-                return 
+            if(this.ary[right] > this.ary[maxId]){
+                maxId = right 
             }
-            this._shifDown(2 * idx + 1)
+            if(maxId !== idx){
+                this._swap(maxId,idx)
+                this._shifDown(maxId)
+            }
         }
 
         _swap(i, j) {
@@ -130,12 +140,14 @@
       }
       
 
-      let c = new PriorityQueue1();
-      const random = new Array(10).fill(0).map(i => Math.floor(Math.random() * 100))
-      for(let i =0; i < 10; i++){
+      const random = new Array(9).fill(0).map(i => Math.floor(Math.random() * 100))
+      debugger;
+      let c = new PriorityQueue1(random);
+      for(let i =0; i < 9; i++){
           console.log(c.add(random[i]))
       }
-      for(let i =0; i < 10; i++){
+      debugger;
+      for(let i =0; i < 9; i++){
           console.log(c.peek())
       }
     </script>
