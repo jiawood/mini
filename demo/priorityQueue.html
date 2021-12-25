@@ -69,8 +69,9 @@
       }
 
       class PriorityQueue1 {
-        constructor(initial) {
+        constructor(initial, compare = (a,b) => a < b) {
           this.ary = initial.slice() || [];
+          this.compare = compare
           this._heapfiy()
         }
 
@@ -100,7 +101,7 @@
                 return 
             }
             let parent = Math.floor((idx - 1) / 2)
-            if(this.ary[parent] < this.ary[idx]){
+            if(this.compare(this.ary[parent], this.ary[idx])){
                 this._swap(parent,idx)
             }
             this._shiftUp(parent) 
@@ -113,10 +114,10 @@
             let left = idx * 2 + 1 
             let right = idx * 2 + 2 
             let maxId = idx
-            if(this.ary[left] > this.ary[maxId]){
+            if(this.compare(this.ary[maxId], this.ary[left])){
                 maxId = left 
             }
-            if(this.ary[right] > this.ary[maxId]){
+            if(this.compare(this.ary[maxId] , this.ary[right])){
                 maxId = right 
             }
             if(maxId !== idx){
@@ -132,6 +133,11 @@
         }
 
         peek() {
+            return this.size === 0 ? null : this.ary[0]
+        }
+
+        // 弹出第一个
+        poll() {
           const res = this.ary[0];
           this.ary[0] = this.ary.pop();
           this._shifDown(0)
@@ -141,14 +147,14 @@
       
 
       const random = new Array(9).fill(0).map(i => Math.floor(Math.random() * 100))
-      debugger;
-      let c = new PriorityQueue1(random);
+    //   debugger;
+      let c = new PriorityQueue1(random,(a,b) => b < a );
+    //   for(let i =0; i < 9; i++){
+    //       console.log(c.add(random[i]))
+    //   }
+    //   debugger;
       for(let i =0; i < 9; i++){
-          console.log(c.add(random[i]))
-      }
-      debugger;
-      for(let i =0; i < 9; i++){
-          console.log(c.peek())
+          console.log(c.poll())
       }
     </script>
   </body>
