@@ -1,0 +1,125 @@
+<script>
+
+    const demo = {
+        a: 1,
+        b: null,
+        c: true,
+        d: {
+            aa: 'women'
+        },
+        e: [1,2,3],
+        f: 34,
+    }
+
+    const str = '{"a":1,"b":null,"c":true,"d":{"aa":"women"},"e":[1,2,3],"f":34}'
+    // const str = '{"a":1}'
+
+    let i = 0 
+
+    function parseValue() {
+        if(str[i] === '['){
+            return parseArray()
+        }
+        if(str[i] === '{'){
+            return parseObject()
+        }
+        if(str[i] === '"'){
+            return parseString()
+        }
+        if(str[i] === 't'){
+            return parseTrue()
+        }
+        if(str[i] === 'f'){
+            return parseFalse()
+        }
+        if(str[i] === 'n'){
+            return parseNull()
+        }
+        return parseNumber()
+    }
+
+
+
+    function parseArray(){
+        i++ // skip [
+        const res = []
+        while(str[i] !== ']'){
+            if(str[i] === ','){
+                i++
+            }
+            const v = parseValue()
+            res.push(v)
+        }
+        i++  // skip ]
+        return res 
+    }
+
+    function parseObject(){
+        i++ // skip {
+        const res = {}
+        while(str[i] !== '}'){
+            
+            const key = parseString()
+            i++ 
+            const v = parseValue()
+            res[key] = v 
+            if(str[i] === ','){
+                i++
+            }
+        }
+        i++
+        return res 
+    }
+
+    function parseString() {
+        i++ //skip "
+        let res = ''
+        while(str[i] !== '"'){
+            res += str[i]
+            i++
+        }
+        i++ 
+        return res 
+    }
+
+    function parseNull(){
+        i = i + 4 
+        return null 
+    }
+
+    function parseTrue(){
+        i = i + 4 
+        return true 
+    }
+
+    function parseFalse(){
+        i = i + 5 
+        return false 
+    }
+
+    function parseNumber(){
+        let res = 0
+        while(isDigit()){
+            res = res * 10 + Number(str[i])
+            i++
+        }
+        return res 
+
+    }
+
+    function isDigit(){
+        const char = str[i].charCodeAt(0)
+        const char0 = '0'.charCodeAt(0)
+        const char9 = '9'.charCodeAt(0)
+        return char >= char0 && char <= char9
+    }
+
+    function jsonParse(str){
+        i = 0 
+        return parseValue(str)
+
+    }
+    console.log(11)
+    console.log(jsonParse(str)) 
+    
+</script>
