@@ -138,6 +138,9 @@
 
         // 弹出第一个
         poll() {
+          if(this.size === 1){
+            return this.ary.pop();
+          }
           const res = this.ary[0];
           this.ary[0] = this.ary.pop();
           this._shifDown(0)
