@@ -100,13 +100,55 @@ function combineReducer(reducers){
 }
 
 const store = createStore(reducer);
-console.dir(store.getState())
+// console.dir(store.getState())
+
+// 中间件的概念  中间件就是对dispatch的增强
+const next = store.dispatch
+
+// 重写 store.dispatch 
+// store.dispatch = (action) => {
+//   console.log('this is bigger dispatch')
+//   next(action)
+// }
+
+// 重写是可以达到要求的，但是如果有很多不一样的需求，重写起来很麻烦
+// 如果有很多需求，我们的dispatch函数会变得很复杂
+// 这时候我们要考虑一种简单的可以组合的中间件形式
+
+const loggerMiddleware = (store) => (next) => (action) => {
+  console.log('heihei')
+  next(action)
+}
+
+// const errorMiddleware = (action) => {
+//   try {
+//     loggerMiddleware(action)
+//   } catch (error) {
+//     console.log('error')
+//   }
+// }
+
+const errorMiddleware = (store) => (next) => (action) => {
+  try {
+    next(action)
+  }catch(error){
+    console.log('error')
+  }
+}
+
+const logger = loggerMiddleware(store)
+
+const error = errorMiddleware(store)
+
+store.dispatch =  error(logger(next))
 
 
 store.subcribe(() => {
   let state = store.getState();
   console.log("level change", state.counter.count, state.info.name);
 });
+
+next({type: "INCREMENT"})
 
 store.dispatch({ type: "INCREMENT" });
 
