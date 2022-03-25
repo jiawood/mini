@@ -1,4 +1,11 @@
+let counter = {
+  count: 1
+}
+
 function countReducer(state, action) {
+  if(!state){
+    state = counter
+  }
   switch (action.type) {
     case "INCREMENT":
       return {
@@ -15,7 +22,14 @@ function countReducer(state, action) {
   }
 }
 
+let info = {
+  name: 'xj'
+}
+
 function infoReducer(state, action) {
+  if(!state){
+    return info 
+  }
   switch (action.type) {
     case "SETNAME":
       return {
@@ -46,6 +60,8 @@ function createStore(reducer, initialState) {
     return state;
   }
 
+  dispatch({type: Symbol()})
+
   return {
     subcribe,
     dispatch,
@@ -53,15 +69,15 @@ function createStore(reducer, initialState) {
   };
 }
 
-const state = {
-  counter: {
-    count: 1,
-  },
-  info: {
-    name: "xj",
-    description: "前端",
-  },
-};
+// const state = {
+//   counter: {
+//     count: 1,
+//   },
+//   info: {
+//     name: "xj",
+//     description: "前端",
+//   },
+// };
 
 const reducer = combineReducer({
   counter: countReducer,
@@ -83,7 +99,8 @@ function combineReducer(reducers){
   }
 }
 
-const store = createStore(reducer, state);
+const store = createStore(reducer);
+console.dir(store.getState())
 
 
 store.subcribe(() => {
