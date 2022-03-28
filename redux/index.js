@@ -41,7 +41,12 @@ function infoReducer(state, action) {
   }
 }
 
-function createStore(reducer, initialState) {
+function createStore(reducer, initialState, rewriteCreateStoreFunc) {
+  // 如果有 rewriteCreateStoreFunc,那就采用新的 createStore
+  if (rewriteCreateStoreFunc) {
+    const newCreateStore = rewriteCreateStoreFunc(createStore);
+    return newCreateStore(reducer, initialState);
+  }
   let state = initialState;
   let listeners = [];
 
@@ -166,9 +171,12 @@ const applyMiddleware = function (...middlewares) {
   };
 };
 
-const createNewStore = applyMiddleware(loggerMiddleware, errorMiddleware)(createStore); // 前一个参数传中间件进去，后一个参数传store进去，返回新的store
+const rewriteCreateStoreFunc = applyMiddleware(
+  loggerMiddleware,
+  errorMiddleware
+); // 前一个参数传中间件进去，后一个参数传store进去，返回新的store
 
-store = createNewStore(reducer);
+store = createStore(reducer, {}, rewriteCreateStoreFunc);
 
 // 明天再來實現applyMiddleware吧
 
