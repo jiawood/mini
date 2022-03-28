@@ -42,6 +42,12 @@ function infoReducer(state, action) {
 }
 
 function createStore(reducer, initialState, rewriteCreateStoreFunc) {
+
+  if(typeof initialState === 'function'){
+    initialState = {}
+    rewriteCreateStoreFunc = initialState
+  }
+
   // 如果有 rewriteCreateStoreFunc,那就采用新的 createStore
   if (rewriteCreateStoreFunc) {
     const newCreateStore = rewriteCreateStoreFunc(createStore);
@@ -52,6 +58,10 @@ function createStore(reducer, initialState, rewriteCreateStoreFunc) {
 
   function subcribe(listener) {
     listeners.push(listener);
+    return function unsubscribe() {
+      const index = listeners.indexOf(listener);
+      listeners.splice(index, 1);
+    };
   }
 
   function dispatch(action) {
@@ -184,6 +194,13 @@ store.subcribe(() => {
   let state = store.getState();
   console.log("level change", state.counter.count, state.info.name);
 });
+
+const unsubcribe = store.subcribe(() => {
+  let state = store.getState();
+  console.log("level1 change", state.counter.count, state.info.name);
+});
+
+unsubcribe();
 
 next({ type: "INCREMENT" });
 
