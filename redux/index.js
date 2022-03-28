@@ -1,10 +1,10 @@
 let counter = {
-  count: 1
-}
+  count: 1,
+};
 
 function countReducer(state, action) {
-  if(!state){
-    state = counter
+  if (!state) {
+    state = counter;
   }
   switch (action.type) {
     case "INCREMENT":
@@ -23,12 +23,12 @@ function countReducer(state, action) {
 }
 
 let info = {
-  name: 'xj'
-}
+  name: "xj",
+};
 
 function infoReducer(state, action) {
-  if(!state){
-    return info 
+  if (!state) {
+    return info;
   }
   switch (action.type) {
     case "SETNAME":
@@ -60,7 +60,7 @@ function createStore(reducer, initialState) {
     return state;
   }
 
-  dispatch({type: Symbol()})
+  dispatch({ type: Symbol() });
 
   return {
     subcribe,
@@ -81,31 +81,31 @@ function createStore(reducer, initialState) {
 
 const reducer = combineReducer({
   counter: countReducer,
-  info: infoReducer
-})
+  info: infoReducer,
+});
 
-function combineReducer(reducers){
-  let keys = Object.keys(reducers)
+function combineReducer(reducers) {
+  let keys = Object.keys(reducers);
   return function combination(state = {}, action) {
-    const nextState = {}
-    for(let i = 0; i < keys.length; i++){
-      const key = keys[i]
-      const reducer = reducers[key]
-      const previousStateForKey = state[key]
-      const nextStateForKey = reducer(previousStateForKey,action)
-      nextState[key] = nextStateForKey
+    const nextState = {};
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      const reducer = reducers[key];
+      const previousStateForKey = state[key];
+      const nextStateForKey = reducer(previousStateForKey, action);
+      nextState[key] = nextStateForKey;
     }
-    return nextState
-  }
+    return nextState;
+  };
 }
 
-const store = createStore(reducer);
+let store = createStore(reducer);
 // console.dir(store.getState())
 
 // 中间件的概念  中间件就是对dispatch的增强
-const next = store.dispatch
+const next = store.dispatch;
 
-// 重写 store.dispatch 
+// 重写 store.dispatch
 // store.dispatch = (action) => {
 //   console.log('this is bigger dispatch')
 //   next(action)
@@ -116,9 +116,9 @@ const next = store.dispatch
 // 这时候我们要考虑一种简单的可以组合的中间件形式
 
 const loggerMiddleware = (store) => (next) => (action) => {
-  console.log('heihei')
-  next(action)
-}
+  console.log("heihei");
+  next(action);
+};
 
 // const errorMiddleware = (action) => {
 //   try {
@@ -130,28 +130,57 @@ const loggerMiddleware = (store) => (next) => (action) => {
 
 const errorMiddleware = (store) => (next) => (action) => {
   try {
-    next(action)
-  }catch(error){
-    console.log('error')
+    next(action);
+  } catch (error) {
+    console.log("error");
   }
-}
+};
 
-const logger = loggerMiddleware(store)
+// const logger = loggerMiddleware(store);
 
-const error = errorMiddleware(store)
+// const error = errorMiddleware(store);
 
-store.dispatch =  error(logger(next))
+// store.dispatch = error(logger(next));
 
+// 这种方法虽然实现了中间件，但是中间的使用起来不太舒服，需要一直嵌套函数
+// 我们期望可以这样实现中间件机制
+
+const applyMiddleware = function (...middlewares) {
+  return function rewriteCreateStoreFunc(oldCreateStore) {
+    return function newCreateStore(reducer, initState) {
+      /*1.生成store */
+      const store = oldCreateStore(reducer, initState);
+      // 给每个 middleware 传下store，相当于 const logger = loggerMiddleware(store)
+      // const chain = [error,logger]
+      const chain = middlewares.map((middleware) => middleware(store));
+      let dispatch = store.dispatch;
+      // 实现 error(logger(next))
+      chain.reverse().map((middleware) => {
+        dispatch = middleware(dispatch);
+      });
+
+      // 重写dispatch
+      store.dispatch = dispatch;
+      return store;
+    };
+  };
+};
+
+const createNewStore = applyMiddleware(loggerMiddleware, errorMiddleware)(createStore); // 前一个参数传中间件进去，后一个参数传store进去，返回新的store
+
+store = createNewStore(reducer);
+
+// 明天再來實現applyMiddleware吧
 
 store.subcribe(() => {
   let state = store.getState();
   console.log("level change", state.counter.count, state.info.name);
 });
 
-next({type: "INCREMENT"})
+next({ type: "INCREMENT" });
 
 store.dispatch({ type: "INCREMENT" });
 
-store.dispatch({type:"DECREMENT"})
+store.dispatch({ type: "DECREMENT" });
 
-store.dispatch({type:"SETNAME",name:'xiao'})
+store.dispatch({ type: "SETNAME", name: "xiao" });
