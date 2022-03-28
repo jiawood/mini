@@ -48,3 +48,16 @@ function compose1(...args) {
 // f1(f1)
 
 console.log(compose1(f1, f2, f3)(4))
+
+function compose2(...funs) {
+  return arg => {
+    let res = arg;
+    for (var i = 0, fl = funs.length; i < fl; i++) {
+      // 接受返回值，并且将上一个函数的返回值传递给当前函数
+      res = funs[i](res);
+    }
+    return res;
+  };
+}
+
+console.log(compose2(f1,f2,f3)(4))
