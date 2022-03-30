@@ -1,0 +1,15 @@
+{
+  "name": "gulp-learn",
+  "version": "1.0.0",
+  "description": "gulp learn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp-babel": "^8.0.0",
+    "gulp-terser": "^2.1.0"
+  }
+}
