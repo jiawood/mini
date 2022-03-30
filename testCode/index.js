@@ -6,6 +6,27 @@ let arr = [
   {id: 5, name: '部门5', pid: 4},
 ]
 
+const getChildren1 = (data,res,pid) => {
+
+  for(const item of data){
+    
+    if(item.pid === pid){
+      const newItem = {...item,children:[]}
+      res.push(newItem)
+      getChildren1(data,newItem.children,item.id)
+    }
+  }
+}
+
+const arrayToTree2 = (data,pid) => {
+  let res = []
+  getChildren1(data,res,pid)
+  console.log(JSON.stringify(res,null,2))
+}
+
+arrayToTree2(arr,0)
+
+
 const getChildren = (data,res,pid) => {
   for(const item of data){
     if(item.pid === pid){
@@ -22,7 +43,7 @@ const arrayToTree = (data,pid) => {
   return res 
 }
 
-console.log(JSON.stringify(arrayToTree(arr,0),null,' '))
+// console.log(JSON.stringify(arrayToTree(arr,0),null,' '))
 
 // 第二种方法可以成功的关键在于引用对象指向的是同一个
 function arrayToTree1(items) {
@@ -53,4 +74,4 @@ function arrayToTree1(items) {
   return result;
 }
 
-arrayToTree1(arr)
+// arrayToTree1(arr)
