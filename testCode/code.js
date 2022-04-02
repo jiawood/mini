@@ -24,4 +24,30 @@ const add = (() => {
 // oReq.send()
 
 
+function get(time) {
+  return new Promise((resolve,reject) => {
+    setTimeout(() => {
+      resolve('succ')
+    },time)
+  })
+}
 
+function request(time){
+  return new Promise((resolve,reject) => {
+    const timer = setTimeout(() => {
+      reject('time out')
+      clearTimeout(timer)
+    },time)
+    get(3000).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+// request(4000).then(res => console.log(res)).catch(res => console.log(res)) 
+
+
+// 判断数组的方法
+let a  =  []
+console.log(a instanceof Array)
+console.log(a.__proto__ === Array.prototype)
