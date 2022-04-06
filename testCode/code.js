@@ -51,3 +51,34 @@ function request(time){
 let a  =  []
 console.log(a instanceof Array)
 console.log(a.__proto__ === Array.prototype)
+
+
+// 在time时间后再执行callback，中间如果被打断，则重新及时
+function debounce(time,callback){
+  const self = this 
+  let timer = null;
+  return function(){
+    if(timer){
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      callback.apply(self)
+    },time)
+  }
+}
+
+
+// 节流，如果在一段时间内一直触发某个函数，每过time时间，才触发一次
+function throttle(time,callback){
+  const self = this 
+  let timer = null
+  return function(){
+    if(!timer){
+      timer = setTimeout(() => {
+        callback.apply(self, [].slice().apply(arguments))
+        timer = null 
+        clearTimeout(timer)
+      },time)
+    }
+  }
+}
