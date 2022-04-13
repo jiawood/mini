@@ -82,3 +82,40 @@ function throttle(time,callback){
     }
   }
 }
+
+// 实现async await 
+function * generator() {
+  const data = yield get(2000)
+  console.log('data', data)
+  const data1 = yield get(1000)
+  console.log('test',data1)
+  return 'success'
+}
+
+
+
+const promiseGen = (gfunc) =>  {
+  const self = this 
+  return new Promise((resolve,reject) => {
+    const gen = gfunc.call(self)
+    const run = (data) => {
+      const res = gen.next(data)
+      const {value,done} = res 
+      if(done) {
+        resolve(value)
+      }else{
+        return Promise.resolve(value).then(run, () => {gen.throw()})
+      }
+    }
+    run()
+  })
+}
+
+function * gen  () {
+  const data1 = yield 1 
+  console.log(data1)
+  const data2 = yield 2 
+  console.log(data2)
+  return 3
+}
+
